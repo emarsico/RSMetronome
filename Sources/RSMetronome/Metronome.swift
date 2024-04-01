@@ -19,7 +19,7 @@ public class Metronome {
     var stateListener: ((_ playing: Bool) -> ())?
     
     private var patternPlayer: PatternPlayer?
-    private var soundSet = SoundSet.cowbell
+    private var soundSet = SoundSet.clave
     
     public init(stateListener: ((_ playing: Bool) -> ())? = nil, beatListener: ((_ beatType: BeatType, _ index: Int) -> ())? = nil){
         self.beatListener = beatListener
