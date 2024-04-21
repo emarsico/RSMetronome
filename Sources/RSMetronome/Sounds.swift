@@ -7,6 +7,7 @@
 
 import UIKit
 import AudioToolbox
+import AVFoundation
 
 struct SoundSet {
     
@@ -36,18 +37,26 @@ struct SoundSet {
 }
 
 class Sound {
-
-    private var soundId: SystemSoundID = 0
     
-    init(fileName: String){
-        
-        if let soundURL = Bundle.module.url(forResource: fileName, withExtension: "caf") {
-            AudioServicesCreateSystemSoundID(soundURL as CFURL, &soundId)
+    private var audioPlayer: AVAudioPlayer?
+    
+    init(fileName: String) {
+        if let soundURL = Bundle.main.url(forResource: fileName, withExtension: "caf") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                audioPlayer?.prepareToPlay()
+            } catch {
+                print("Error initializing AVAudioPlayer: \(error)")
+            }
         }
     }
     
-    func play(){
-        AudioServicesPlaySystemSound(soundId);
+    func play() {
+        audioPlayer?.play()
     }
     
+    func stop() {
+        audioPlayer?.stop()
+    }
 }
+
