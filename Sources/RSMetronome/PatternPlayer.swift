@@ -101,11 +101,9 @@ class PatternPlayer {
     
     private func playElement(element: PlayableElement) {
         let sound = soundSet.soundForBeatType(beatType: element.beatType)
-        if let audioPlayer = try? AVAudioPlayer(contentsOf: sound.url) {
-            audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume // Optionally control volume
-            audioPlayer.play()
-        }
+        sound.play()
     }
+
     
     private func waitForElement(element: PlayableElement){
         let timeInterval = element.value.timeIntervalWithTempo(tempo: settings.tempo, tempoNote: settings.tempoNote)
