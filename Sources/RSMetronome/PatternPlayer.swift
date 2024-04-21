@@ -99,8 +99,12 @@ class PatternPlayer {
         Thread.exit()
     }
     
-    private func playElement(element: PlayableElement){
-        soundSet.soundForBeatType(beatType: element.beatType).play()        
+    private func playElement(element: PlayableElement) {
+        let sound = soundSet.soundForBeatType(beatType: element.beatType)
+        if let audioPlayer = try? AVAudioPlayer(contentsOf: sound.url) {
+            audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume // Optionally control volume
+            audioPlayer.play()
+        }
     }
     
     private func waitForElement(element: PlayableElement){
