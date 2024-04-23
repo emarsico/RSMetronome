@@ -19,20 +19,10 @@ class PatternPlayer {
     
     private var thread: Thread?
     
-    init(settings: Settings, soundSet: SoundSet){
+    init(settings: Settings,
+         soundSet: SoundSet){
         self.settings = settings
         self.soundSet = soundSet
-        setupAudioSession()
-    }
-    
-    private func setupAudioSession() {
-        do {
-            let audioSession = AVAudioSession.sharedInstance()
-            try audioSession.setCategory(.playback, mode: .default)
-            try audioSession.setActive(true)
-        } catch {
-            print("Failed to set up audio session: \(error)")
-        }
     }
     
     func play(){
@@ -99,11 +89,9 @@ class PatternPlayer {
         Thread.exit()
     }
     
-    private func playElement(element: PlayableElement) {
-        let sound = soundSet.soundForBeatType(beatType: element.beatType)
-        sound.play()
+    private func playElement(element: PlayableElement){
+        soundSet.soundForBeatType(beatType: element.beatType).play()        
     }
-
     
     private func waitForElement(element: PlayableElement){
         let timeInterval = element.value.timeIntervalWithTempo(tempo: settings.tempo, tempoNote: settings.tempoNote)
